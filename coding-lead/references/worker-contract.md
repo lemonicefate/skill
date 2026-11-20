@@ -12,7 +12,7 @@ Repo / worktree：<ABSOLUTE_WORKTREE>；branch：<BRANCH>；固定 base SHA：<S
 權限邊界：<COMMIT/PUSH/NETWORK/INSTALL/REAL_DATA AUTHORIZATION>
 
 1. 讀專案 AGENTS.md、Spec 和 Issue；確認 base/worktree 與安全條件符合。
-2. 依 TDD 先建立會失敗的行為測試（RED，保留失敗摘要），完成最小修改後取得 GREEN，再做必要重構及回歸。
+2. 在寫測試或程式前，**透過 Codex Skill tool 正式呼叫 Matt Pocock `tdd` Skill 並確認載入成功**。這是 `implement-spec` 指定的逐票執行 Skill，不是閱讀文件後自行模仿。只在已核准的 public-interface seam 按當前 `tdd` 規範完成 Red → Green；若無法呼叫，回報 `BLOCKED_SKILL_INVOCATION`，停止本票實作。
 3. 只做本 Issue。不要修改 Lead worktree、其他 repo，也不要自行派子 Agent。
 4. 每個 commit 使用明確檔案 stage；若授權不包含 commit，僅提交 diff / 測試證據供 Lead 處理。不得自行 push、merge 或擴大範圍。
 5. 完成或真正 blocked 時，以 hc send <LEAD_TERMINAL_ID> 回報；保持 Session 可讀，等 Lead 核對後清理。
@@ -20,7 +20,7 @@ Repo / worktree：<ABSOLUTE_WORKTREE>；branch：<BRANCH>；固定 base SHA：<S
 必須回報：
 - Issue / branch / worktree / base SHA / head SHA；
 - 修改檔案、commit SHA（如已授權）與 dirty status；
-- RED 的實際命令、失敗證據；GREEN、完整測試命令與結果；
+- `tdd` Skill 正式呼叫／載入紀錄（Session ID 與證據）、RED 的實際命令與失敗證據、GREEN 與完整測試結果；
 - 安全／資料來源驗證及剩餘未驗證內容；
 - status = READY_FOR_INTEGRATION 或 BLOCKED；若 BLOCKED，最小必要人工動作。
 ```
