@@ -12,7 +12,7 @@ Repo / worktree：<ABSOLUTE_WORKTREE>；branch：<BRANCH>；固定 base SHA：<S
 權限邊界：<COMMIT/PUSH/NETWORK/INSTALL/REAL_DATA AUTHORIZATION>
 
 1. 讀專案 AGENTS.md、Spec 和 Issue；確認 base/worktree 與安全條件符合。
-2. 在寫測試或程式前，**透過 Codex Skill tool 正式呼叫 Matt Pocock `tdd` Skill 並確認載入成功**。這是 `implement-spec` 指定的逐票執行 Skill，不是閱讀文件後自行模仿。只在已核准的 public-interface seam 按當前 `tdd` 規範完成 Red → Green；若無法呼叫，回報 `BLOCKED_SKILL_INVOCATION`，停止本票實作。
+2. 在寫測試或程式前，透過 **Codex 原生 Skill 機制**載入 Matt Pocock `tdd`：優先在本 Worker Session 的第一則 user/task 訊息明確加入 `$mattpocock-skills:tdd`（必要時由 Lead 用 `hc send` 傳送），也接受已能核實的 model-invoked 載入。檢查 Session 中確實出現對應 `<skill>` 注入區塊、名稱與來源路徑，才在已核准的 public-interface seam 按原版 `tdd` 進行 Red → Green。Codex 不需要獨立的 `Skill tool`；缺少此工具不是阻塞。若原生載入經檢查仍失敗，才回報 `BLOCKED_SKILL_INVOCATION`，停止本票實作。
 3. 只做本 Issue。不要修改 Lead worktree、其他 repo，也不要自行派子 Agent。
 4. 每個 commit 使用明確檔案 stage；若授權不包含 commit，僅提交 diff / 測試證據供 Lead 處理。不得自行 push、merge 或擴大範圍。
 5. 完成或真正 blocked 時，以 hc send <LEAD_TERMINAL_ID> 回報；保持 Session 可讀，等 Lead 核對後清理。
